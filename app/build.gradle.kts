@@ -66,4 +66,7 @@ dependencies {
     implementation(libs.dotsindicator)
 
     implementation(libs.glide)
+
+    val lottieVersion = "5.2.0"
+    implementation("com.airbnb.android:lottie:$lottieVersion")
 }
