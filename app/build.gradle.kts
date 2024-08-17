@@ -51,7 +51,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(libs.markdownview.android)
+    implementation("io.noties.markwon:core:4.6.2")
 
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
