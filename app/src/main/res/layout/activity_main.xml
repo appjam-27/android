@@ -37,12 +37,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="20dp"
-                    android:text="너의 목표"
+                    android:text="너의 목표를 향해"
                     android:textColor="@color/black40"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:text="0% 달성"
                     android:id="@+id/achievement_text"
                     style="@style/display_strong"
                     android:layout_width="wrap_content"

@@ -6,6 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
+        android:layout_marginStart="16dp"
+        android:gravity="start"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -13,10 +15,12 @@
         app:layout_constraintTop_toTopOf="parent"
         style="@style/headline_strong"
         android:textColor="@color/whiteFull"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <TextView
+        android:layout_marginStart="16dp"
+        android:gravity="start"
         android:layout_marginTop="6dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +28,7 @@
         android:textColor="@color/white40"
         style="@style/body_regular"
         android:id="@+id/content"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

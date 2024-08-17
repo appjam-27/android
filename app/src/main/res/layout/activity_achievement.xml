@@ -133,6 +133,7 @@
             app:layout_constraintTop_toTopOf="@+id/rank" />
 
         <LinearLayout
+            android:layout_marginTop="24dp"
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -141,6 +142,7 @@
             app:layout_constraintTop_toBottomOf="@id/rank">
 
             <TextView
+                android:layout_marginStart="16dp"
                 android:id="@+id/study_title"
                 style="@style/headline_strong"
                 android:layout_width="wrap_content"
@@ -148,6 +150,7 @@
                 android:textColor="@color/blackFull" />
 
             <TextView
+                android:layout_marginStart="16dp"
                 android:id="@+id/study_sub"
                 style="@style/body_regular"
                 android:layout_width="wrap_content"
@@ -158,9 +161,12 @@
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBaseline_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
             <androidx.cardview.widget.CardView
