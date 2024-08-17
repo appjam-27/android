@@ -41,8 +41,6 @@ class LearningActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupWindowInsets()
 
-
-
         binding.apply {
             main.run {
                 header = binding.topBar
@@ -54,6 +52,8 @@ class LearningActivity : AppCompatActivity() {
                 subTitle.text = it.item.goal
 
                 CoroutineScope(Dispatchers.IO).launch {
+                    val item = getContents(ContentRequest(it.item.goal, it.item.chapters[it.level]))
+
                     finishButton.setOnClickListener { view ->
                         val goalDao = AppDatabase.getDatabase(this@LearningActivity)?.goalDao()
                         val level = ++it.level
@@ -61,10 +61,11 @@ class LearningActivity : AppCompatActivity() {
                         it.level = level
                         goalDao?.updateGoal(it)
 
-                        startActivity(Intent(this@LearningActivity, MainActivity::class.java))
-                        finishAffinity()
+                        val intent = Intent(this@LearningActivity, EndActivity::class.java)
+                        intent.putExtra("md", item?.content)
+                        intent.putExtra("goal", it.item.goal)
+                        startActivity(intent)
                     }
-                    val item = getContents(ContentRequest(it.item.goal, it.item.chapters[it.level]))
                     withContext(Dispatchers.Main) {
                         markdown.apply {
                             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
