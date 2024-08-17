@@ -37,9 +37,9 @@ class EndActivity : AppCompatActivity() {
                 binding.apply {
                     subTitle.text = goal
                     Glide.with(this@EndActivity)
-                        .load(getImage?.url)
+                        .load(getImage?.content?.url)
                         .into(binding.image)
-                    subTitle.text = getImage?.content
+                    subText.text = getImage?.content?.content
                     finishButton.setOnClickListener {
                         startActivity(Intent(this@EndActivity, MainActivity::class.java))
                         finishAffinity()
