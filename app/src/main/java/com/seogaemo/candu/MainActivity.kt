@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() {
                     CoroutineScope(Dispatchers.IO).launch {
                         val item = goalNew(inputText)
                         val goalDao = AppDatabase.getDatabase(this@MainActivity)?.goalDao()
-                        item?.let { Goal(item= it, color = colorList[Random.nextInt(0, colorList.size - 1)]) }?.let {
+                        item?.let { Goal(item= it, color = colorList[Random.nextInt(0, colorList.size - 1)], level = 0) }?.let {
                             goalDao?.insertGoal(it)
                             setAdapter()
 
