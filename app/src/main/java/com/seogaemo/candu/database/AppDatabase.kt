@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.seogaemo.candu.data.Goal
 
-@Database(entities = [Goal::class], version = 2)
+@Database(entities = [Goal::class], version = 4)
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun goalDao(): GoalDAO
