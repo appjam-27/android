@@ -23,6 +23,7 @@ import com.seogaemo.candu.databinding.ActivityLearningBinding
 import com.seogaemo.candu.databinding.ActivityMainBinding
 import com.seogaemo.candu.network.RetrofitAPI
 import com.seogaemo.candu.network.RetrofitClient
+import com.seogaemo.candu.util.Dialog.createLoadingDialog
 import io.noties.markwon.Markwon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -88,14 +89,22 @@ class LearningActivity : AppCompatActivity() {
     }
 
     private suspend fun getContents(content: ContentRequest): ContentResponse? {
+        val dialog = this@LearningActivity.createLoadingDialog()
+        dialog.show()
         return try {
             withContext(Dispatchers.IO) {
                 val retrofitAPI = RetrofitClient.getInstance().create(RetrofitAPI::class.java)
                 val response = retrofitAPI.getContent(content)
                 if (response.isSuccessful) {
+                    withContext(Dispatchers.Main) {
+                        dialog.dismiss()
+                    }
+                    dialog.dismiss()
                     response.body()
+
                 } else {
                     withContext(Dispatchers.Main) {
+                        dialog.dismiss()
                         Toast.makeText(this@LearningActivity, "실패하였습니다", Toast.LENGTH_SHORT).show()
                     }
                     null

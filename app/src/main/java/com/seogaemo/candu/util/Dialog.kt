@@ -8,8 +8,8 @@ import android.view.Window
 import com.seogaemo.candu.R
 
 object Dialog {
-    fun createLoadingDialog(context: Context): Dialog {
-        val dialog = Dialog(context)
+     fun Context.createLoadingDialog(): Dialog {
+        val dialog = Dialog(this)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)

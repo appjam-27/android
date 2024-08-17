@@ -16,6 +16,7 @@ import com.seogaemo.candu.data.GoalResponse
 import com.seogaemo.candu.databinding.ActivityEndBinding
 import com.seogaemo.candu.network.RetrofitAPI
 import com.seogaemo.candu.network.RetrofitClient
+import com.seogaemo.candu.util.Dialog.createLoadingDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -56,11 +57,14 @@ class EndActivity : AppCompatActivity() {
     }
 
     private suspend fun getImage(data: CompleteRequest): CompleteResponse? {
+        val dialog = this@EndActivity.createLoadingDialog()
+        dialog.show()
         return try {
             withContext(Dispatchers.IO) {
                 val retrofitAPI = RetrofitClient.getInstance().create(RetrofitAPI::class.java)
                 val response = retrofitAPI.getImage(data)
                 if (response.isSuccessful) {
+                    dialog.dismiss()
                     response.body()
                 } else {
                     withContext(Dispatchers.Main) {

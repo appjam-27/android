@@ -12,6 +12,7 @@ import com.seogaemo.candu.database.AppDatabase
 import com.seogaemo.candu.databinding.ActivityAchievementBinding
 import com.seogaemo.candu.network.RetrofitAPI
 import com.seogaemo.candu.network.RetrofitClient
+import com.seogaemo.candu.util.Dialog.createLoadingDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -103,11 +104,15 @@ class AchievementActivity : AppCompatActivity() {
     }
 
     private suspend fun goalNew(goal: String): GoalResponse? {
+        val dialog = this@AchievementActivity.createLoadingDialog()
+        dialog.show()
+
         return try {
             withContext(Dispatchers.IO) {
                 val retrofitAPI = RetrofitClient.getInstance().create(RetrofitAPI::class.java)
                 val response = retrofitAPI.goalNew(GoalRequest(goal))
                 if (response.isSuccessful) {
+                    dialog.dismiss()
                     response.body()
                 } else {
                     withContext(Dispatchers.Main) {
