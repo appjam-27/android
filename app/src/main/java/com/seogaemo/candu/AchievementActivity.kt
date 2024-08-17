@@ -26,6 +26,27 @@ class AchievementActivity : AppCompatActivity() {
 
         intent.getParcelableExtra<Goal>("item")?.let {
             binding.apply {
+                oButton.setOnClickListener { view ->
+                    val intent = Intent(this@AchievementActivity, AchievementActivity::class.java)
+                    intent.putExtra("item", it)
+                    startActivity(intent)
+                }
+                xButton.setOnClickListener { view ->
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val update = goalNew(it.item.goal)
+                        val item = it
+                        if (update != null) {
+                            item.item = update
+                            val goalDao = AppDatabase.getDatabase(this@AchievementActivity)?.goalDao()
+                            goalDao?.updateGoal(item)
+
+                            withContext(Dispatchers.Main) {
+                                initView(item)
+                            }
+                        }
+                    }
+                }
+
                 backButton.setOnClickListener { finish() }
                 shareButton.setOnClickListener {
 
