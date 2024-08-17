@@ -2,15 +2,20 @@ package com.seogaemo.candu.view
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
+import android.view.ViewTreeObserver
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.seogaemo.candu.R
@@ -45,6 +50,32 @@ class MainActivity : AppCompatActivity() {
         setAdapter()
         setInit()
         setCommit()
+
+
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            private var previousKeyboardHeight = 0
+
+            override fun onGlobalLayout() {
+                val rect = Rect()
+                binding.root.getWindowVisibleDisplayFrame(rect)
+                val screenHeight = binding.root.rootView.height
+                val keyboardHeight = screenHeight - rect.bottom
+
+                if (keyboardHeight > screenHeight * 0.15) {
+                    // 키보드가 올라왔을 때
+                    if (keyboardHeight != previousKeyboardHeight) {
+                        binding.sheet.updatePadding(bottom = keyboardHeight)
+                    }
+                } else {
+                    if (previousKeyboardHeight > 0) {
+                        binding.sheet.updatePadding(bottom = 0)
+                    }
+                }
+
+                previousKeyboardHeight = keyboardHeight
+            }
+        })
+
     }
 
     private fun setCommit() {
@@ -111,7 +142,7 @@ class MainActivity : AppCompatActivity() {
                 var num = 0
                 it.forEach { count -> num+=count.level }
                 if (num != 0) {
-                    val value = (num.toDouble() / (it.size * 4).toDouble()) * 100
+                    val value = ((num.toDouble() / (it.size * 4).toDouble()) * 100).toInt()
 
                     if (value.toString().length > 1) {
                         val item = value.toString()[0].code
@@ -200,17 +231,19 @@ class MainActivity : AppCompatActivity() {
             this.setOnEditorActionListener { v, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
                     val inputText = v.text.toString()
-                    CoroutineScope(Dispatchers.IO).launch {
+                    CoroutineScope(Dispatchers.Main).launch {
                         val item = goalNew(inputText)
-                        val goalDao = AppDatabase.getDatabase(this@MainActivity)?.goalDao()
-                        item?.let { Goal(item= it, color = colorList[Random.nextInt(0, colorList.size - 1)], level = 0) }?.let {
-                            goalDao?.insertGoal(it)
-                            setAdapter()
+                        withContext(Dispatchers.IO) {
+                            val goalDao = AppDatabase.getDatabase(this@MainActivity)?.goalDao()
+                            item?.let { Goal(item= it, color = colorList[Random.nextInt(0, colorList.size - 1)], level = 0) }?.let {
+                                goalDao?.insertGoal(it)
+                                setAdapter()
 
-                            withContext(Dispatchers.Main) {
-                                keyBordHide()
-                                binding.main.requestFocus()
-                                sheet.state = BottomSheetBehavior.STATE_COLLAPSED
+                                withContext(Dispatchers.Main) {
+                                    keyBordHide()
+                                    binding.main.requestFocus()
+                                    sheet.state = BottomSheetBehavior.STATE_COLLAPSED
+                                }
                             }
                         }
                     }
@@ -230,7 +263,13 @@ class MainActivity : AppCompatActivity() {
     private fun setupSystemBarsInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+
+            val statusBarHeight = statusBars.top
+            val navBarHeight = systemBars.bottom
+
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            binding.textView.setPadding(0, statusBarHeight, 0, navBarHeight)
             insets
         }
     }
