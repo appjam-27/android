@@ -1,4 +1,4 @@
-package com.seogaemo.candu.adapter
+package com.seogaemo.candu.view
 
 import android.content.Intent
 import android.os.Bundle

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.seogaemo.candu.R
 import com.seogaemo.candu.data.Goal
 import com.seogaemo.candu.databinding.AchievementItemBinding
+import com.seogaemo.candu.view.AchievementActivity
 
 class AchievementAdapter(private val achievementList: List<Goal>): RecyclerView.Adapter<AchievementAdapter.AchievementViewHolder>() {
 

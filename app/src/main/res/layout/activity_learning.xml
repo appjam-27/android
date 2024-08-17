@@ -9,7 +9,7 @@
     android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".adapter.LearningActivity">
+    tools:context=".view.LearningActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

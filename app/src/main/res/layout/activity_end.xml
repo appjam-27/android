@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whiteFull"
-    tools:context=".adapter.EndActivity">
+    tools:context=".view.EndActivity">
 
     <TextView
         android:layout_marginTop="16dp"

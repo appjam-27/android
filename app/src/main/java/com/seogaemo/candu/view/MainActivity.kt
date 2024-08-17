@@ -1,4 +1,4 @@
-package com.seogaemo.candu.adapter
+package com.seogaemo.candu.view
 
 import android.content.Context
 import android.graphics.Color
@@ -14,6 +14,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.seogaemo.candu.R
+import com.seogaemo.candu.adapter.AchievementAdapter
+import com.seogaemo.candu.adapter.CommitAdapter
 import com.seogaemo.candu.data.Goal
 import com.seogaemo.candu.data.GoalRequest
 import com.seogaemo.candu.data.GoalResponse
@@ -42,6 +44,64 @@ class MainActivity : AppCompatActivity() {
         setBottomSheet()
         setAdapter()
         setInit()
+        setCommit()
+    }
+
+    private fun setCommit() {
+        val defaultAdapter = CommitAdapter(listOf(1, 1, 1, 1, 1))
+        binding.apply {
+            commitList2.adapter = defaultAdapter
+            commitList2.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            commitList2.adapter = defaultAdapter
+            commitList2.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            commitList3.adapter = defaultAdapter
+            commitList3.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            commitList4.adapter = defaultAdapter
+            commitList4.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            commitList5.adapter = defaultAdapter
+            commitList5.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            commitList6.adapter = defaultAdapter
+            commitList6.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            commitList7.adapter = defaultAdapter
+            commitList7.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            commitList8.adapter = defaultAdapter
+            commitList8.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            commitList9.adapter = defaultAdapter
+            commitList9.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            commitList11.adapter = defaultAdapter
+            commitList11.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            commitList12.adapter = defaultAdapter
+            commitList12.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            commitList13.adapter = defaultAdapter
+            commitList13.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            commitList14.adapter = defaultAdapter
+            commitList14.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            commitList15.adapter = defaultAdapter
+            commitList15.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            commitList16.adapter = defaultAdapter
+            commitList16.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            commitList17.adapter = defaultAdapter
+            commitList17.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            commitList18.adapter = defaultAdapter
+            commitList18.layoutManager = LinearLayoutManager(this@MainActivity)
+
+        }
     }
 
     private fun setInit() {
@@ -52,8 +112,15 @@ class MainActivity : AppCompatActivity() {
                 it.forEach { count -> num+=count.level }
                 if (num != 0) {
                     val value = (num.toDouble() / (it.size * 4).toDouble()) * 100
-                    Log.d("확인", value.toString())
 
+                    if (value.toString().length > 1) {
+                        val item = value.toString()[0].code
+                        binding.commitList1.adapter = CommitAdapter(listOf(item, 1, 1, 1, 1))
+                        binding.commitList1.layoutManager = LinearLayoutManager(this@MainActivity)
+                    } else {
+                        binding.commitList1.adapter = CommitAdapter(listOf(1, 1, 1, 1, 1))
+                        binding.commitList1.layoutManager = LinearLayoutManager(this@MainActivity)
+                    }
                     withContext(Dispatchers.Main) {
                         binding.achievementText.text = "$value% 달성"
                     }

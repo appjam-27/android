@@ -1,4 +1,4 @@
-package com.seogaemo.candu.adapter
+package com.seogaemo.candu.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.seogaemo.candu.R
+import com.seogaemo.candu.adapter.ViewPagerAdapter
 import com.seogaemo.candu.data.Goal
 import com.seogaemo.candu.data.GoalRequest
 import com.seogaemo.candu.data.GoalResponse

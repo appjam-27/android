@@ -9,7 +9,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main"
-    tools:context=".adapter.MainActivity">
+    tools:context=".view.MainActivity">
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -66,15 +66,199 @@
                 app:cardCornerRadius="24dp"
                 app:layout_constraintTop_toBottomOf="@+id/top_banner">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/commit_list"
+                <LinearLayout
+                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="12dp"
-                    android:layout_marginVertical="12dp"
-                    android:nestedScrollingEnabled="false"
-                    android:overScrollMode="never" />
+                    android:layout_height="match_parent">
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list1"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list2"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list3"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list4"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list5"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list6"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list7"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list8"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list9"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list11"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list12"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list13"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list14"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list15"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list16"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list17"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commit_list18"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:listitem="@layout/commit_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
