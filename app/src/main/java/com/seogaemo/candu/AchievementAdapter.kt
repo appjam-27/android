@@ -1,5 +1,7 @@
 package com.seogaemo.candu
 
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +13,11 @@ class AchievementAdapter(private val achievementList: List<Goal>): RecyclerView.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AchievementViewHolder {
         val binding = AchievementItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return AchievementViewHolder(binding).also { handler ->
-
+            binding.root.setOnClickListener {
+                val intent = Intent(binding.root.context, AchievementActivity::class.java)
+                intent.putExtra("item", achievementList[handler.adapterPosition])
+                binding.root.context.startActivity(intent)
+            }
         }
     }
 
