@@ -2,8 +2,123 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Candu" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/backgroundCanvasregular_light</item>
+        <item name="android:statusBarColor">@color/whiteFull</item>
     </style>
 
     <style name="Theme.Candu" parent="Base.Theme.Candu" />
+    
+    <style name="display_weak">
+        <item name="android:fontFamily">@font/s_regular</item>
+        <item name="android:textSize">48sp</item>
+        <item name="android:lineHeight">70dp</item>
+        <item name="android:letterSpacing">-0.03</item>
+    </style>
+    <style name="display_regular">
+        <item name="android:fontFamily">@font/s_medium</item>
+        <item name="android:textSize">48sp</item>
+        <item name="android:lineHeight">70dp</item>
+        <item name="android:letterSpacing">-0.03</item>
+    </style>
+    <style name="display_strong">
+        <item name="android:fontFamily">@font/s_bold</item>
+        <item name="android:textSize">48sp</item>
+        <item name="android:lineHeight">70dp</item>
+        <item name="android:letterSpacing">-0.03</item>
+    </style>
+
+    <style name="title_weak">
+        <item name="android:fontFamily">@font/s_regular</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:lineHeight">34dp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+    <style name="title_regular">
+        <item name="android:fontFamily">@font/s_medium</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:lineHeight">34dp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+    <style name="title_strong">
+        <item name="android:fontFamily">@font/s_bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:lineHeight">34dp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="headline_weak">
+        <item name="android:fontFamily">@font/s_regular</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineHeight">28dp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+    <style name="headline_regular">
+        <item name="android:fontFamily">@font/s_medium</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineHeight">28dp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+    <style name="headline_strong">
+        <item name="android:fontFamily">@font/s_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineHeight">28dp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="body_weak">
+        <item name="android:fontFamily">@font/s_regular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">24dp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+    <style name="body_regular">
+        <item name="android:fontFamily">@font/s_medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">24dp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+    <style name="body_strong">
+        <item name="android:fontFamily">@font/s_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">24dp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="callout_weak">
+        <item name="android:fontFamily">@font/s_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">20dp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+    <style name="callout_regular">
+        <item name="android:fontFamily">@font/s_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">20dp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+    <style name="callout_strong">
+        <item name="android:fontFamily">@font/s_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">20dp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="footnote_weak">
+        <item name="android:fontFamily">@font/s_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineHeight">18dp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+    <style name="footnote_regular">
+        <item name="android:fontFamily">@font/s_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineHeight">18dp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+    <style name="footnote_strong">
+        <item name="android:fontFamily">@font/s_bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineHeight">18dp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
 </resources>
