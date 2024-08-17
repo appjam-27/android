@@ -3,6 +3,7 @@ package com.seogaemo.candu.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -46,7 +47,7 @@ class LearningActivity : AppCompatActivity() {
                 }
                 subTitle.text = it.item.goal
 
-                CoroutineScope(Dispatchers.IO).launch {
+                CoroutineScope(Dispatchers.Main).launch {
                     val item = getContents(ContentRequest(it.item.goal, it.item.chapters[it.level]))
 
                     withContext(Dispatchers.Main) {
@@ -96,10 +97,9 @@ class LearningActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
                         dialog.dismiss()
+                        binding.finishButton.visibility = View.VISIBLE
                     }
-                    dialog.dismiss()
                     response.body()
-
                 } else {
                     withContext(Dispatchers.Main) {
                         dialog.dismiss()
