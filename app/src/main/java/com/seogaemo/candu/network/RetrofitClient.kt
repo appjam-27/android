@@ -1,7 +1,6 @@
 package com.seogaemo.candu.network
 
 import com.google.gson.GsonBuilder
-import com.mukesh.BuildConfig
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
