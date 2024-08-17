@@ -14,7 +14,7 @@
         android:layout_margin="16dp"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_colorFilter="#02FF03"
+        app:lottie_colorFilter="@color/primary"
         app:lottie_rawRes="@raw/loading" />
 
 </FrameLayout>

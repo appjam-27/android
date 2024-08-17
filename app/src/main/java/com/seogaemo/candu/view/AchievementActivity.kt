@@ -1,10 +1,15 @@
 package com.seogaemo.candu.view
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.seogaemo.candu.R
 import com.seogaemo.candu.adapter.ViewPagerAdapter
 import com.seogaemo.candu.data.Goal
@@ -26,7 +31,9 @@ class AchievementActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAchievementBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        enableEdgeToEdge(SystemBarStyle.dark(0xFFFFFF))
 
+        setupSystemBarsInsets()
         intent.getParcelableExtra<Goal>("item")?.let {
             binding.apply {
                 oButton.setOnClickListener { view ->
@@ -39,16 +46,18 @@ class AchievementActivity : AppCompatActivity() {
                     )
                 }
                 xButton.setOnClickListener { view ->
-                    CoroutineScope(Dispatchers.IO).launch {
+                    CoroutineScope(Dispatchers.Main).launch {
                         val update = goalNew(it.item.goal)
                         val item = it
                         if (update != null) {
                             item.item = update
-                            val goalDao = AppDatabase.getDatabase(this@AchievementActivity)?.goalDao()
-                            goalDao?.updateGoal(item)
+                            withContext(Dispatchers.IO) {
+                                val goalDao = AppDatabase.getDatabase(this@AchievementActivity)?.goalDao()
+                                goalDao?.updateGoal(item)
 
-                            withContext(Dispatchers.Main) {
-                                initView(item)
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    initView(item)
+                                }
                             }
                         }
                     }
@@ -62,15 +71,14 @@ class AchievementActivity : AppCompatActivity() {
                     )
                 }
                 shareButton.setOnClickListener {
-
-                    Intent.createChooser(
+                    startActivity(Intent.createChooser(
                         Intent(Intent.ACTION_SEND_MULTIPLE).apply {
                             type = "text/plain"
                             val content = "목표를 공유했어요!\n하단 설명을 통해 어떤 목표인지 확인하세요."
                             putExtra(Intent.EXTRA_TEXT,"$content")
                         },
                         "친구에게 목표 공유하기"
-                    )
+                    ))
                 }
 
                 initView(it)
@@ -110,6 +118,26 @@ class AchievementActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun setupSystemBarsInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+
+            val statusBarHeight = statusBars.top
+            val navBarHeight = systemBars.bottom
+
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+
+            binding.backButton.setPadding(0, statusBarHeight, 0, navBarHeight)
+            binding.shareButton.setPadding(0, statusBarHeight, 0, navBarHeight)
+
+            window.navigationBarColor = Color.parseColor("#FFFFFF")
+
+            insets
+        }
+    }
+
 
     private suspend fun goalNew(goal: String): GoalResponse? {
         val dialog = this@AchievementActivity.createLoadingDialog()

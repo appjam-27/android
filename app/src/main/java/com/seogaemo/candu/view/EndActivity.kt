@@ -28,7 +28,7 @@ class EndActivity : AppCompatActivity() {
         val md = intent.getStringExtra("md").toString()
         val goal = intent.getStringExtra("goal").toString()
 
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             val getImage = getImage(CompleteRequest(md, goal))
             withContext(Dispatchers.Main) {
                 binding.apply {
