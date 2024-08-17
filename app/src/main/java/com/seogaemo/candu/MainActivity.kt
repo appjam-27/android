@@ -39,11 +39,30 @@ class MainActivity : AppCompatActivity() {
         setupSystemBarsInsets()
         setBottomSheet()
         setAdapter()
-        setInit(0)
+        setInit()
     }
 
-    private fun setInit(count: Int) {
-        binding.achievementText.text = "$count% 달성"
+    private fun setInit() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val goalDao = AppDatabase.getDatabase(this@MainActivity)?.goalDao()
+            goalDao?.getGoalList()?.let {
+                var num = 0
+                it.forEach { count -> num+=count.level }
+                if (num != 0) {
+                    val value = (num.toDouble() / (it.size * 4).toDouble()) * 100
+                    Log.d("확인", value.toString())
+
+                    withContext(Dispatchers.Main) {
+                        binding.achievementText.text = "$value% 달성"
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        binding.achievementText.text = "0% 달성"
+                    }
+                }
+            }
+
+        }
     }
 
     private fun setAdapter() {
