@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 data class Goal (
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-    val item: GoalResponse,
+    var item: GoalResponse,
     val color: Int,
     var level: Int
 ): Parcelable

@@ -1,9 +1,21 @@
 package com.seogaemo.candu
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.seogaemo.candu.data.Goal
+import com.seogaemo.candu.data.GoalRequest
+import com.seogaemo.candu.data.GoalResponse
+import com.seogaemo.candu.database.AppDatabase
 import com.seogaemo.candu.databinding.ActivityAchievementBinding
+import com.seogaemo.candu.network.RetrofitAPI
+import com.seogaemo.candu.network.RetrofitClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AchievementActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAchievementBinding
@@ -17,30 +29,69 @@ class AchievementActivity : AppCompatActivity() {
                 backButton.setOnClickListener { finish() }
                 shareButton.setOnClickListener {
 
+                    Intent.createChooser(
+                        Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+                            type = "text/plain"
+                            val content = "목표를 공유했어요!\n하단 설명을 통해 어떤 목표인지 확인하세요."
+                            putExtra(Intent.EXTRA_TEXT,"$content")
+                        },
+                        "친구에게 목표 공유하기"
+                    )
                 }
-                val image = when (it.item.icon) {
-                    "design" -> R.drawable.figma
-                    "activities" -> R.drawable.directions
-                    "movies" -> R.drawable.theaters
-                    "social" -> R.drawable.handshake
-                    "dev" -> R.drawable.dev
-                    "business" -> R.drawable.business
-                    else -> R.drawable.figma
-                }
-                icon.setImageResource(image)
-                title.text = it.item.goal
-                rank.text = "${it.level}단계"
-                nextTitle.text = it.item.goal
-                studyTitle.text = it.item.chapters[it.level].title
-                studySub.text = it.item.chapters[it.level].desc
-                time.text = it.item.chapters[it.level].duration
 
-                viewPager.apply {
-                    adapter = ViewPagerAdapter(it.item.story.content, it.color, it.item.story.title)
-                    binding.indicator.attachTo(this)
-                }
+                initView(it)
             }
 
         }
     }
+
+    private fun initView(it: Goal) {
+        binding.apply {
+            val image = when (it.item.icon) {
+                "design" -> R.drawable.figma
+                "activities" -> R.drawable.directions
+                "movies" -> R.drawable.theaters
+                "social" -> R.drawable.handshake
+                "dev" -> R.drawable.dev
+                "business" -> R.drawable.business
+                else -> R.drawable.figma
+            }
+            icon.setImageResource(image)
+            title.text = it.item.goal
+            rank.text = "${it.level}단계"
+            nextTitle.text = it.item.goal
+            studyTitle.text = it.item.chapters[it.level].title
+            studySub.text = it.item.chapters[it.level].desc
+            time.text = it.item.chapters[it.level].duration
+
+            viewPager.apply {
+                adapter = ViewPagerAdapter(it.item.story.content, it.color, it.item.story.title)
+                binding.indicator.attachTo(this)
+            }
+        }
+    }
+
+    private suspend fun goalNew(goal: String): GoalResponse? {
+        return try {
+            withContext(Dispatchers.IO) {
+                val retrofitAPI = RetrofitClient.getInstance().create(RetrofitAPI::class.java)
+                val response = retrofitAPI.goalNew(GoalRequest(goal))
+                if (response.isSuccessful) {
+                    response.body()
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@AchievementActivity, "실패하였습니다", Toast.LENGTH_SHORT).show()
+                    }
+                    null
+                }
+            }
+        } catch (e: Exception) {
+            Log.d("확인", e.toString())
+            withContext(Dispatchers.Main) {
+                Toast.makeText(this@AchievementActivity, "실패하였습니다", Toast.LENGTH_SHORT).show()
+            }
+            null
+        }
+    }
+
 }
