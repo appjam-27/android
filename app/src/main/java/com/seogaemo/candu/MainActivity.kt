@@ -1,7 +1,9 @@
 package com.seogaemo.candu
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -9,19 +11,76 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.seogaemo.candu.data.Goal
+import com.seogaemo.candu.data.GoalRequest
+import com.seogaemo.candu.data.GoalResponse
+import com.seogaemo.candu.database.AppDatabase
 import com.seogaemo.candu.databinding.ActivityMainBinding
+import com.seogaemo.candu.network.RetrofitAPI
+import com.seogaemo.candu.network.RetrofitClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    val colorList = listOf(Color.parseColor("#BB3435"), Color.parseColor("#2F9147"), Color.parseColor("#E95132"), Color.parseColor("#7C2DE0"), Color.parseColor("#3359DE"), Color.parseColor("#FFBF0F"))
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupSystemBarsInsets()
         setBottomSheet()
+        setAdapter()
+        setInit(0)
+    }
+
+    private fun setInit(count: Int) {
+        binding.achievementText.text = "$count% 달성"
+    }
+
+    private fun setAdapter() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val goalDao = AppDatabase.getDatabase(this@MainActivity)?.goalDao()
+            val item = goalDao?.getGoalList()
+
+            withContext(Dispatchers.Main) {
+                binding.achievementList.apply {
+                    adapter = item?.let { AchievementAdapter(it) }
+                    layoutManager = LinearLayoutManager(this@MainActivity)
+                }
+            }
+        }
+    }
+
+    private suspend fun goalNew(goal: String): GoalResponse? {
+        return try {
+            withContext(Dispatchers.IO) {
+                val retrofitAPI = RetrofitClient.getInstance().create(RetrofitAPI::class.java)
+                val response = retrofitAPI.goalNew(GoalRequest(goal))
+                if (response.isSuccessful) {
+                    response.body()
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@MainActivity, "실패하였습니다", Toast.LENGTH_SHORT).show()
+                    }
+                    null
+                }
+            }
+        } catch (e: Exception) {
+            Log.d("확인", e.toString())
+            withContext(Dispatchers.Main) {
+                Toast.makeText(this@MainActivity, "실패하였습니다", Toast.LENGTH_SHORT).show()
+            }
+            null
+        }
     }
 
     private fun setBottomSheet() {
@@ -48,8 +107,20 @@ class MainActivity : AppCompatActivity() {
             this.setOnEditorActionListener { v, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
                     val inputText = v.text.toString()
-                    Toast.makeText(this@MainActivity, inputText, Toast.LENGTH_SHORT).show()
-                    // 입력
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val item = goalNew(inputText)
+                        val goalDao = AppDatabase.getDatabase(this@MainActivity)?.goalDao()
+                        item?.let { Goal(item= it, color = colorList[Random.nextInt(0, colorList.size - 1)]) }?.let {
+                            goalDao?.insertGoal(it)
+                            setAdapter()
+
+                            withContext(Dispatchers.Main) {
+                                keyBordHide()
+                                binding.main.requestFocus()
+                                sheet.state = BottomSheetBehavior.STATE_COLLAPSED
+                            }
+                        }
+                    }
                     true
                 } else {
                     false
