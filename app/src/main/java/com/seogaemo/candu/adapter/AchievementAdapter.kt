@@ -1,11 +1,11 @@
-package com.seogaemo.candu
+package com.seogaemo.candu.adapter
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.seogaemo.candu.R
 import com.seogaemo.candu.data.Goal
 import com.seogaemo.candu.databinding.AchievementItemBinding
 
@@ -19,7 +19,10 @@ class AchievementAdapter(private val achievementList: List<Goal>): RecyclerView.
                 intent.putExtra("item", achievementList[handler.adapterPosition])
                 binding.root.context.startActivity(intent)
 
-                (binding.root.context as Activity).overridePendingTransition(R.anim.anim_slide_in_from_right_fade_in, R.anim.anim_fade_out)
+                (binding.root.context as Activity).overridePendingTransition(
+                    R.anim.anim_slide_in_from_right_fade_in,
+                    R.anim.anim_fade_out
+                )
             }
         }
     }

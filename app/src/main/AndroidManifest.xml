@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".SplashActivity"
+            android:name=".adapter.SplashActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,16 +25,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EndActivity"
+            android:name=".adapter.EndActivity"
             android:exported="false" />
         <activity
-            android:name=".AchievementActivity"
+            android:name=".adapter.AchievementActivity"
             android:exported="false" />
         <activity
-            android:name=".LearningActivity"
+            android:name=".adapter.LearningActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".adapter.MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
     </application>

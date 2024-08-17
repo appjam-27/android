@@ -2,7 +2,6 @@ package com.seogaemo.candu.database
 
 import androidx.room.*
 import com.seogaemo.candu.data.Goal
-import com.seogaemo.candu.data.GoalResponse
 
 @Dao
 interface GoalDAO {

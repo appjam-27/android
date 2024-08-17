@@ -1,4 +1,4 @@
-package com.seogaemo.candu
+package com.seogaemo.candu.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

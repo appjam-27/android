@@ -1,26 +1,18 @@
-package com.seogaemo.candu
+package com.seogaemo.candu.adapter
 
 import android.content.Intent
-import android.graphics.BlurMaskFilter
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.seogaemo.candu.R
 import com.seogaemo.candu.data.ContentRequest
 import com.seogaemo.candu.data.ContentResponse
 import com.seogaemo.candu.data.Goal
-import com.seogaemo.candu.data.GoalRequest
-import com.seogaemo.candu.data.GoalResponse
 import com.seogaemo.candu.database.AppDatabase
 import com.seogaemo.candu.databinding.ActivityLearningBinding
-import com.seogaemo.candu.databinding.ActivityMainBinding
 import com.seogaemo.candu.network.RetrofitAPI
 import com.seogaemo.candu.network.RetrofitClient
 import com.seogaemo.candu.util.Dialog.createLoadingDialog
@@ -47,7 +39,10 @@ class LearningActivity : AppCompatActivity() {
                 title.text = it.item.goal
                 backButton.setOnClickListener {
                     finish()
-                    overridePendingTransition(R.anim.anim_slide_in_from_left_fade_in, R.anim.anim_fade_out)
+                    overridePendingTransition(
+                        R.anim.anim_slide_in_from_left_fade_in,
+                        R.anim.anim_fade_out
+                    )
                 }
                 subTitle.text = it.item.goal
 
@@ -67,7 +62,10 @@ class LearningActivity : AppCompatActivity() {
                                     intent.putExtra("md", item?.content)
                                     intent.putExtra("goal", it.item.goal)
                                     startActivity(intent)
-                                    overridePendingTransition(R.anim.anim_slide_in_from_right_fade_in, R.anim.anim_fade_out)
+                                    overridePendingTransition(
+                                        R.anim.anim_slide_in_from_right_fade_in,
+                                        R.anim.anim_fade_out
+                                    )
                                 }
                             }
                         }

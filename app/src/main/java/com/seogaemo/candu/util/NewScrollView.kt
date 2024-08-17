@@ -1,4 +1,4 @@
-package com.seogaemo.candu
+package com.seogaemo.candu.util
 
 import android.content.Context
 import android.util.AttributeSet

@@ -1,4 +1,4 @@
-package com.seogaemo.candu
+package com.seogaemo.candu.adapter
 
 import android.content.Context
 import android.graphics.Color
@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.seogaemo.candu.R
 import com.seogaemo.candu.data.Goal
 import com.seogaemo.candu.data.GoalRequest
 import com.seogaemo.candu.data.GoalResponse

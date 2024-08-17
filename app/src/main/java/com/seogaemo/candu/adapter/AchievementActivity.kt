@@ -1,10 +1,11 @@
-package com.seogaemo.candu
+package com.seogaemo.candu.adapter
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.seogaemo.candu.R
 import com.seogaemo.candu.data.Goal
 import com.seogaemo.candu.data.GoalRequest
 import com.seogaemo.candu.data.GoalResponse
@@ -31,7 +32,10 @@ class AchievementActivity : AppCompatActivity() {
                     val intent = Intent(this@AchievementActivity, LearningActivity::class.java)
                     intent.putExtra("item", it)
                     startActivity(intent)
-                    overridePendingTransition(R.anim.anim_slide_in_from_right_fade_in, R.anim.anim_fade_out)
+                    overridePendingTransition(
+                        R.anim.anim_slide_in_from_right_fade_in,
+                        R.anim.anim_fade_out
+                    )
                 }
                 xButton.setOnClickListener { view ->
                     CoroutineScope(Dispatchers.IO).launch {
@@ -51,7 +55,10 @@ class AchievementActivity : AppCompatActivity() {
 
                 backButton.setOnClickListener {
                     finish()
-                    overridePendingTransition(R.anim.anim_slide_in_from_left_fade_in, R.anim.anim_fade_out)
+                    overridePendingTransition(
+                        R.anim.anim_slide_in_from_left_fade_in,
+                        R.anim.anim_fade_out
+                    )
                 }
                 shareButton.setOnClickListener {
 

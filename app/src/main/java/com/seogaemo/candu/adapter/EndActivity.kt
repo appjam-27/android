@@ -1,18 +1,14 @@
-package com.seogaemo.candu
+package com.seogaemo.candu.adapter
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.seogaemo.candu.R
 import com.seogaemo.candu.data.CompleteRequest
 import com.seogaemo.candu.data.CompleteResponse
-import com.seogaemo.candu.data.GoalRequest
-import com.seogaemo.candu.data.GoalResponse
 import com.seogaemo.candu.databinding.ActivityEndBinding
 import com.seogaemo.candu.network.RetrofitAPI
 import com.seogaemo.candu.network.RetrofitClient
@@ -44,7 +40,10 @@ class EndActivity : AppCompatActivity() {
                     finishButton.setOnClickListener {
                         startActivity(Intent(this@EndActivity, MainActivity::class.java))
                         finishAffinity()
-                        overridePendingTransition(R.anim.anim_slide_in_from_right_fade_in, R.anim.anim_fade_out)
+                        overridePendingTransition(
+                            R.anim.anim_slide_in_from_right_fade_in,
+                            R.anim.anim_fade_out
+                        )
                     }
                 }
             }
