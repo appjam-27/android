@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Candu</string>
+    <string name="achievement_text">%d% 달성</string>
 </resources>
