@@ -11,13 +11,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.mukesh.MarkDown
 import com.seogaemo.candu.data.ContentRequest
 import com.seogaemo.candu.data.ContentResponse
 import com.seogaemo.candu.data.Goal
@@ -28,6 +23,7 @@ import com.seogaemo.candu.databinding.ActivityLearningBinding
 import com.seogaemo.candu.databinding.ActivityMainBinding
 import com.seogaemo.candu.network.RetrofitAPI
 import com.seogaemo.candu.network.RetrofitClient
+import io.noties.markwon.Markwon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,30 +50,25 @@ class LearningActivity : AppCompatActivity() {
                 CoroutineScope(Dispatchers.IO).launch {
                     val item = getContents(ContentRequest(it.item.goal, it.item.chapters[it.level]))
 
-                    finishButton.setOnClickListener { view ->
-                        val goalDao = AppDatabase.getDatabase(this@LearningActivity)?.goalDao()
-                        val level = ++it.level
-
-                        it.level = level
-                        goalDao?.updateGoal(it)
-
-                        val intent = Intent(this@LearningActivity, EndActivity::class.java)
-                        intent.putExtra("md", item?.content)
-                        intent.putExtra("goal", it.item.goal)
-                        startActivity(intent)
-                    }
                     withContext(Dispatchers.Main) {
-                        markdown.apply {
-                            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-                            setContent {
-                                MaterialTheme {
-                                    MarkDown(
-                                        text = item.toString(),
-                                        modifier = Modifier.fillMaxSize()
-                                    )
+                        finishButton.setOnClickListener { view ->
+                            CoroutineScope(Dispatchers.IO).launch {
+                                val goalDao = AppDatabase.getDatabase(this@LearningActivity)?.goalDao()
+                                val level = ++it.level
+
+                                it.level = level
+                                goalDao?.updateGoal(it)
+                                withContext(Dispatchers.Main) {
+                                    val intent = Intent(this@LearningActivity, EndActivity::class.java)
+                                    intent.putExtra("md", item?.content)
+                                    intent.putExtra("goal", it.item.goal)
+                                    startActivity(intent)
                                 }
                             }
                         }
+                        val markwon = Markwon.create(this@LearningActivity)
+                        markwon.setMarkdown(markdown, item!!.content)
+
                     }
                 }
 
