@@ -44,7 +44,10 @@ class LearningActivity : AppCompatActivity() {
 
             intent.getParcelableExtra<Goal>("item")?.let {
                 title.text = it.item.goal
-                backButton.setOnClickListener { finish() }
+                backButton.setOnClickListener {
+                    finish()
+                    overridePendingTransition(R.anim.anim_slide_in_from_left_fade_in, R.anim.anim_fade_out)
+                }
                 subTitle.text = it.item.goal
 
                 CoroutineScope(Dispatchers.IO).launch {
@@ -63,6 +66,7 @@ class LearningActivity : AppCompatActivity() {
                                     intent.putExtra("md", item?.content)
                                     intent.putExtra("goal", it.item.goal)
                                     startActivity(intent)
+                                    overridePendingTransition(R.anim.anim_slide_in_from_right_fade_in, R.anim.anim_fade_out)
                                 }
                             }
                         }
@@ -76,6 +80,11 @@ class LearningActivity : AppCompatActivity() {
 
 
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.anim_slide_in_from_left_fade_in, R.anim.anim_fade_out)
     }
 
     private suspend fun getContents(content: ContentRequest): ContentResponse? {

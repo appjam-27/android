@@ -43,10 +43,16 @@ class EndActivity : AppCompatActivity() {
                     finishButton.setOnClickListener {
                         startActivity(Intent(this@EndActivity, MainActivity::class.java))
                         finishAffinity()
+                        overridePendingTransition(R.anim.anim_slide_in_from_right_fade_in, R.anim.anim_fade_out)
                     }
                 }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.anim_slide_in_from_left_fade_in, R.anim.anim_fade_out)
     }
 
     private suspend fun getImage(data: CompleteRequest): CompleteResponse? {

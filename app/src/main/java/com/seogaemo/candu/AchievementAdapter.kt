@@ -1,5 +1,6 @@
 package com.seogaemo.candu
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,6 +18,8 @@ class AchievementAdapter(private val achievementList: List<Goal>): RecyclerView.
                 val intent = Intent(binding.root.context, AchievementActivity::class.java)
                 intent.putExtra("item", achievementList[handler.adapterPosition])
                 binding.root.context.startActivity(intent)
+
+                (binding.root.context as Activity).overridePendingTransition(R.anim.anim_slide_in_from_right_fade_in, R.anim.anim_fade_out)
             }
         }
     }
