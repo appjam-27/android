@@ -1,5 +1,7 @@
 package com.seogaemo.candu.network
 
+import com.seogaemo.candu.data.CompleteRequest
+import com.seogaemo.candu.data.CompleteResponse
 import com.seogaemo.candu.data.ContentRequest
 import com.seogaemo.candu.data.ContentResponse
 import com.seogaemo.candu.data.GoalRequest
@@ -19,4 +21,9 @@ interface RetrofitAPI {
     suspend fun getContent(
         @Body body: ContentRequest
     ): Response<ContentResponse>
+
+    @POST("gpt/chapter/complete")
+    suspend fun getImage(
+        @Body body: CompleteRequest
+    ): Response<CompleteResponse>
 }
