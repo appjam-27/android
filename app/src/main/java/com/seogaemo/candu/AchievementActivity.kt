@@ -27,7 +27,7 @@ class AchievementActivity : AppCompatActivity() {
         intent.getParcelableExtra<Goal>("item")?.let {
             binding.apply {
                 oButton.setOnClickListener { view ->
-                    val intent = Intent(this@AchievementActivity, AchievementActivity::class.java)
+                    val intent = Intent(this@AchievementActivity, LearningActivity::class.java)
                     intent.putExtra("item", it)
                     startActivity(intent)
                 }
@@ -84,9 +84,11 @@ class AchievementActivity : AppCompatActivity() {
             studyTitle.text = it.item.chapters[it.level].title
             studySub.text = it.item.chapters[it.level].desc
             time.text = it.item.chapters[it.level].duration
+            root.setBackgroundColor(it.color)
 
             viewPager.apply {
-                adapter = ViewPagerAdapter(it.item.story.content, it.color, it.item.story.title)
+                val list = it.item.story.content.subList(0, it.level+1)
+                adapter = ViewPagerAdapter(list, it.color, it.item.story.title)
                 binding.indicator.attachTo(this)
             }
         }
