@@ -84,6 +84,7 @@
             android:layout_height="1000dp"/>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/finish_button"
             android:layout_marginHorizontal="12dp"
             android:layout_marginTop="32dp"
             android:layout_width="match_parent"
