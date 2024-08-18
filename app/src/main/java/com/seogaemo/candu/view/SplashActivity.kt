@@ -16,6 +16,7 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed({
             startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+            finish()
             overridePendingTransition(R.anim.anim_slide_in_from_right_fade_in, R.anim.anim_fade_out)
         }, 2000)
     }
