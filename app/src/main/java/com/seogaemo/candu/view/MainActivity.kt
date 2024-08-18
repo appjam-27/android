@@ -1,8 +1,10 @@
 package com.seogaemo.candu.view
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
@@ -13,11 +15,17 @@ import android.widget.Toast
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.firebase.messaging.FirebaseMessaging
 import com.seogaemo.candu.R
 import com.seogaemo.candu.adapter.AchievementAdapter
 import com.seogaemo.candu.adapter.CommitAdapter
@@ -38,8 +46,27 @@ import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val colorList = listOf(Color.parseColor("#BB3435"), Color.parseColor("#2F9147"), Color.parseColor("#E95132"), Color.parseColor("#7C2DE0"), Color.parseColor("#3359DE"), Color.parseColor("#FFBF0F"))
 
-    val colorList = listOf(Color.parseColor("#BB3435"), Color.parseColor("#2F9147"), Color.parseColor("#E95132"), Color.parseColor("#7C2DE0"), Color.parseColor("#3359DE"), Color.parseColor("#FFBF0F"))
+    companion object {
+        const val PERMISSION_REQUEST_CODE = 200
+    }
+
+    private fun permissionCheck() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val permissionCheck = ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.POST_NOTIFICATIONS
+            )
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                    PERMISSION_REQUEST_CODE
+                )
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,32 +77,27 @@ class MainActivity : AppCompatActivity() {
         setAdapter()
         setInit()
         setCommit()
+        permissionCheck()
+        FirebaseMessaging.getInstance().subscribeToTopic("all")
+    }
 
-
-        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            private var previousKeyboardHeight = 0
-
-            override fun onGlobalLayout() {
-                val rect = Rect()
-                binding.root.getWindowVisibleDisplayFrame(rect)
-                val screenHeight = binding.root.rootView.height
-                val keyboardHeight = screenHeight - rect.bottom
-
-                if (keyboardHeight > screenHeight * 0.15) {
-                    // 키보드가 올라왔을 때
-                    if (keyboardHeight != previousKeyboardHeight) {
-                        binding.sheet.updatePadding(bottom = keyboardHeight)
-                    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            PERMISSION_REQUEST_CODE -> {
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(applicationContext, "Permission is denied", Toast.LENGTH_SHORT)
+                        .show()
                 } else {
-                    if (previousKeyboardHeight > 0) {
-                        binding.sheet.updatePadding(bottom = 0)
-                    }
+                    Toast.makeText(applicationContext, "Permission is granted", Toast.LENGTH_SHORT)
+                        .show()
                 }
-
-                previousKeyboardHeight = keyboardHeight
             }
-        })
-
+        }
     }
 
     private fun setCommit() {
@@ -136,6 +158,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setInit() {
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            private var previousKeyboardHeight = 0
+
+            override fun onGlobalLayout() {
+                val rect = Rect()
+                binding.root.getWindowVisibleDisplayFrame(rect)
+                val screenHeight = binding.root.rootView.height
+                val keyboardHeight = screenHeight - rect.bottom
+
+                if (keyboardHeight > screenHeight * 0.15) {
+                    if (keyboardHeight != previousKeyboardHeight) {
+                        binding.sheet.updatePadding(bottom = keyboardHeight)
+                    }
+                } else {
+                    if (previousKeyboardHeight > 0) {
+                        binding.sheet.updatePadding(bottom = 0)
+                    }
+                }
+
+                previousKeyboardHeight = keyboardHeight
+            }
+        })
+
         CoroutineScope(Dispatchers.IO).launch {
             val goalDao = AppDatabase.getDatabase(this@MainActivity)?.goalDao()
             goalDao?.getGoalList()?.let {

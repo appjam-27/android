@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("org.jetbrains.kotlin.kapt")
     id("kotlin-parcelize")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -69,4 +70,14 @@ dependencies {
 
     val lottieVersion = "5.2.0"
     implementation("com.airbnb.android:lottie:$lottieVersion")
+
+    val work_version = "2.7.1"
+    implementation("androidx.work:work-runtime-ktx:$work_version")
+
+    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+
+    implementation ("com.google.firebase:firebase-messaging-ktx")
+    implementation ("com.google.firebase:firebase-messaging-directboot:24.0.0")
+    implementation ("com.google.firebase:firebase-analytics:22.0.2")
+
 }
